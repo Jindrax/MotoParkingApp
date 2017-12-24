@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">MotoParkingApp</string>
+    <string name="plate">Placa</string>
+    <string name="helmets">Cascos</string>
+    <string name="process">Procesar</string>
+    <string name="historic">Historial</string>
+    <string name="close">Cerrar</string>
+</resources>
