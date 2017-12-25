@@ -12,6 +12,7 @@ import com.esotericsoftware.kryonet.Client;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by jindrax on 21/12/17.
@@ -36,7 +37,7 @@ public class ClientThread extends Service {
                 kryo.register(ArrayList.class);
                 cliente.start();
                 try {
-                    cliente.connect(5000, "192.168.0.26", 8051);
+                    cliente.connect(5000, "192.168.0.11", 8051);
                     cliente.addListener(new ClientListener());
                     Joint.setCliente(cliente);
                 } catch (IOException e) {

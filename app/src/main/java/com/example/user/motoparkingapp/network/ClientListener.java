@@ -1,5 +1,6 @@
 package com.example.user.motoparkingapp.network;
 
+import android.util.Log;
 import android.widget.Toast;
 
 import com.esotericsoftware.kryonet.Connection;
@@ -42,13 +43,15 @@ public class ClientListener extends Listener{
                     lobby.updateState(fromServer.getCupos());
                     break;
                 case 1:
+                    Joint.addHistoric(fromServer.getCupos().get(0));
                     lobby.showEntry(fromServer.getCupos().get(0));
                     break;
                 case 2:
-
+                    lobby.showEgress(fromServer.getCupos().get(0));
                     break;
                 case 3:
-
+                    Joint.addHistoric(fromServer.getCupos().get(0));
+                    Toast.makeText(lobby, "Vehiculo retirado exitosamente", Toast.LENGTH_SHORT).show();
                     break;
             }
         }
