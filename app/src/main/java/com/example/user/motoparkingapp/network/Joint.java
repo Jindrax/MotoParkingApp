@@ -3,6 +3,7 @@ package com.example.user.motoparkingapp.network;
 import android.content.Context;
 
 import com.esotericsoftware.kryonet.Client;
+import com.example.user.motoparkingapp.Egress;
 import com.example.user.motoparkingapp.Lobby;
 
 import java.util.List;
@@ -13,6 +14,7 @@ import java.util.List;
 
 public class Joint {
     private static Lobby lobby;
+    private static Egress egress;
     private static Client cliente;
     private static List<CupoJSON> historico;
     private static Context contextoActivo;
@@ -51,5 +53,13 @@ public class Joint {
 
     public static void setContextoActivo(Context contextoActivo) {
         Joint.contextoActivo = contextoActivo;
+    }
+
+    public static Egress getEgress() {
+        return egress;
+    }
+
+    public static void setEgress(Egress egress) {
+        Joint.egress = egress;
     }
 }

@@ -1,12 +1,9 @@
 package com.example.user.motoparkingapp.network;
 
-import android.util.Log;
-import android.widget.Toast;
-
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.FrameworkMessage;
 import com.esotericsoftware.kryonet.Listener;
-import com.example.user.motoparkingapp.Lobby;
+import com.example.user.motoparkingapp.services.CustomBinder;
 
 /**
  * Created by jindrax on 21/12/17.
@@ -14,7 +11,10 @@ import com.example.user.motoparkingapp.Lobby;
 
 public class ClientListener extends Listener{
 
-    public ClientListener() {
+    CustomBinder binder;
+
+    public ClientListener(CustomBinder binder) {
+        this.binder = binder;
     }
 
     @Override
@@ -25,33 +25,28 @@ public class ClientListener extends Listener{
     @Override
     public void disconnected(Connection connection) {
         super.disconnected(connection);
+        connection.close();
     }
 
     @Override
     public void received(Connection connection, Object o) {
         if(!(o instanceof FrameworkMessage.KeepAlive)){
-            Lobby lobby = null;
-            while(lobby == null){
-                lobby = Joint.getLobby();
-            }
             RespuestaServidor fromServer = (RespuestaServidor)o;
             switch ((int)fromServer.getTipoRespuesta()){
                 case -1:
-                    Toast.makeText(lobby, "A ocurrido un error al procesar la peticion", Toast.LENGTH_SHORT).show();
+                    binder.getService().toastError();
                     break;
                 case 0:
-                    lobby.updateState(fromServer.getCupos());
+                    binder.getService().updateState(fromServer.getCupos());
                     break;
                 case 1:
-                    Joint.addHistoric(fromServer.getCupos().get(0));
-                    lobby.showEntry(fromServer.getCupos().get(0));
+                    binder.getService().entryCallback(fromServer.getCupos().get(0));
                     break;
                 case 2:
-                    lobby.showEgress(fromServer.getCupos().get(0));
+                    binder.getService().prospectCallback(fromServer.getCupos().get(0));
                     break;
                 case 3:
-                    Joint.addHistoric(fromServer.getCupos().get(0));
-                    Toast.makeText(lobby, "Vehiculo retirado exitosamente", Toast.LENGTH_SHORT).show();
+                    binder.getService().egressCallback(fromServer.getCupos().get(0));
                     break;
             }
         }

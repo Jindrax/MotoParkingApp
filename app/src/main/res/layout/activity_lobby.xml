@@ -31,7 +31,8 @@
                 android:layout_weight="0.8"
                 android:ems="10"
                 android:hint="@string/plate"
-                android:inputType="textNoSuggestions"
+                android:inputType="textVisiblePassword"
+                android:singleLine="false"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
